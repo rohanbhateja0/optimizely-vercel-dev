@@ -1,0 +1,12 @@
+fragment ImageBannerData on ImageBanner {
+  title: Title
+  description: Description {
+    json
+  }
+  image: Image {
+    ...ReferenceData
+  }
+  cta: CTA {
+    ...ButtonBlockPropertyData 
+  }
+}

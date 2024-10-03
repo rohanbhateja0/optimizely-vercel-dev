@@ -173,6 +173,20 @@ export const CardBlockDataFragmentDoc = /*#__PURE__*/ gql`
   layout: CardImageLayout
 }
     `;
+export const ImageBannerDataFragmentDoc = /*#__PURE__*/ gql`
+    fragment ImageBannerData on ImageBanner {
+  title: Title
+  description: Description {
+    json
+  }
+  image: Image {
+    ...ReferenceData
+  }
+  cta: CTA {
+    ...ButtonBlockPropertyData
+  }
+}
+    `;
 export const OfficeLocationDataFragmentDoc = /*#__PURE__*/ gql`
     fragment OfficeLocationData on OfficeLocation {
   title: OfficeTitle
@@ -232,6 +246,7 @@ export const BlockDataFragmentDoc = /*#__PURE__*/ gql`
     fragment BlockData on _IContent {
   ...IContentData
   ...CardBlockData
+  ...ImageBannerData
   ...OfficeLocationData
   ...ButtonBlockData
   ...MegaMenuGroupBlockData
@@ -315,6 +330,7 @@ ${LinkDataFragmentDoc}
 ${CardBlockDataFragmentDoc}
 ${ReferenceDataFragmentDoc}
 ${ButtonBlockPropertyDataFragmentDoc}
+${ImageBannerDataFragmentDoc}
 ${OfficeLocationDataFragmentDoc}
 ${ButtonBlockDataFragmentDoc}
 ${MegaMenuGroupBlockDataFragmentDoc}
@@ -366,6 +382,7 @@ ${ArticleGroupPageDataFragmentDoc}
 ${BlockDataFragmentDoc}
 ${CardBlockDataFragmentDoc}
 ${ButtonBlockPropertyDataFragmentDoc}
+${ImageBannerDataFragmentDoc}
 ${OfficeLocationDataFragmentDoc}
 ${ButtonBlockDataFragmentDoc}
 ${MegaMenuGroupBlockDataFragmentDoc}
