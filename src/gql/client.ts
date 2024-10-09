@@ -173,6 +173,57 @@ export const CardBlockDataFragmentDoc = /*#__PURE__*/ gql`
   layout: CardImageLayout
 }
     `;
+export const LinkItemDataFragmentDoc = /*#__PURE__*/ gql`
+    fragment LinkItemData on Link {
+  title
+  text
+  target
+  url {
+    ...LinkData
+  }
+}
+    `;
+export const SocialIconFooterFragmentDoc = /*#__PURE__*/ gql`
+    fragment SocialIconFooter on JWSocialIcon {
+  ... on JWSocialIcon {
+    IconName
+    IconValue {
+      ...ReferenceData
+    }
+    Link {
+      ...LinkData
+    }
+  }
+}
+    `;
+export const FooterDataFragmentDoc = /*#__PURE__*/ gql`
+    fragment FooterData on Footer {
+  copyrighttext: CopyrightText
+  footertext: FooterText {
+    json
+  }
+  links: FooterLinks {
+    ...LinkItemData
+  }
+  icons: Icons {
+    ...SocialIconFooter
+  }
+  columns: FooterColumns {
+    ... on FooterColumn {
+      Title
+      Icon {
+        ...ReferenceData
+      }
+      ColumnItems {
+        ...LinkItemData
+      }
+    }
+  }
+  Logo {
+    ...ReferenceData
+  }
+}
+    `;
 export const ImageBannerDataFragmentDoc = /*#__PURE__*/ gql`
     fragment ImageBannerData on ImageBanner {
   title: Title
@@ -184,6 +235,43 @@ export const ImageBannerDataFragmentDoc = /*#__PURE__*/ gql`
   }
   cta: CTA {
     ...ButtonBlockPropertyData
+  }
+}
+    `;
+export const JWHeaderDataFragmentDoc = /*#__PURE__*/ gql`
+    fragment JWHeaderData on JWHeader {
+  logo: HeaderLogo {
+    ...ReferenceData
+  }
+  bannerr: HeaderBanner {
+    ...ReferenceData
+  }
+  topbar: HeaderTopBar {
+    ... on JWHeaderTopBar {
+      LeftNavigationLinks {
+        ...LinkItemData
+      }
+      SearchIcon {
+        ...ReferenceData
+      }
+      FindAStore {
+        ...ReferenceData
+      }
+    }
+  }
+  mainNav: HeaderMainNavigation {
+    ... on JWMainNavigation {
+      Title
+      IsTabLayout
+      HeaderColumns {
+        ... on JWHeaderColumn {
+          HeaderColumnTitle
+          HeaderColumnLinks {
+            ...LinkItemData
+          }
+        }
+      }
+    }
   }
 }
     `;
@@ -208,16 +296,6 @@ export const ButtonBlockDataFragmentDoc = /*#__PURE__*/ gql`
   className
   buttonType
   variant
-}
-    `;
-export const LinkItemDataFragmentDoc = /*#__PURE__*/ gql`
-    fragment LinkItemData on Link {
-  title
-  text
-  target
-  url {
-    ...LinkData
-  }
 }
     `;
 export const NavigationMenuBlockDataFragmentDoc = /*#__PURE__*/ gql`
@@ -246,7 +324,10 @@ export const BlockDataFragmentDoc = /*#__PURE__*/ gql`
     fragment BlockData on _IContent {
   ...IContentData
   ...CardBlockData
+  ...FooterData
+  ...SocialIconFooter
   ...ImageBannerData
+  ...JWHeaderData
   ...OfficeLocationData
   ...ButtonBlockData
   ...MegaMenuGroupBlockData
@@ -330,12 +411,15 @@ ${LinkDataFragmentDoc}
 ${CardBlockDataFragmentDoc}
 ${ReferenceDataFragmentDoc}
 ${ButtonBlockPropertyDataFragmentDoc}
+${FooterDataFragmentDoc}
+${LinkItemDataFragmentDoc}
+${SocialIconFooterFragmentDoc}
 ${ImageBannerDataFragmentDoc}
+${JWHeaderDataFragmentDoc}
 ${OfficeLocationDataFragmentDoc}
 ${ButtonBlockDataFragmentDoc}
 ${MegaMenuGroupBlockDataFragmentDoc}
 ${NavigationMenuBlockDataFragmentDoc}
-${LinkItemDataFragmentDoc}
 ${PageDataFragmentDoc}
 ${BlankExperienceDataFragmentDoc}
 ${ExperienceDataFragmentDoc}
@@ -382,12 +466,15 @@ ${ArticleGroupPageDataFragmentDoc}
 ${BlockDataFragmentDoc}
 ${CardBlockDataFragmentDoc}
 ${ButtonBlockPropertyDataFragmentDoc}
+${FooterDataFragmentDoc}
+${LinkItemDataFragmentDoc}
+${SocialIconFooterFragmentDoc}
 ${ImageBannerDataFragmentDoc}
+${JWHeaderDataFragmentDoc}
 ${OfficeLocationDataFragmentDoc}
 ${ButtonBlockDataFragmentDoc}
 ${MegaMenuGroupBlockDataFragmentDoc}
 ${NavigationMenuBlockDataFragmentDoc}
-${LinkItemDataFragmentDoc}
 ${ArticlePageDataFragmentDoc}`;
 export const getArticleListElementItemsDocument = /*#__PURE__*/ gql`
     query getArticleListElementItems($count: Int, $locale: [Locales]) {

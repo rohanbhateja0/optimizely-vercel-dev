@@ -1,23 +1,46 @@
-import React from 'react';
-import styles from './Footer.module.css';
+import React from "react";
+import styles from "./Footer.module.css";
+import { ContentReference, Link as OptiLink } from "@/gql/graphql";
+import CmsImage from "@/components/shared/cms_image";
+import Image from "next/image";
+import Link from "next/link";
 
 interface FooterColumnProps {
-  icon: string;
-  title: string;
-  items: string[];
+  Icon: ContentReference | undefined;
+  Title: string;
+  links: OptiLink[];
 }
 
-const FooterColumn: React.FC<FooterColumnProps> = ({ icon, title, items }) => {
+const FooterCol: React.FC<FooterColumnProps> = ({ Icon, Title, links }) => {
   return (
     <div className={styles.footerColumn}>
       <div className={styles.columnContent}>
-        <img loading="lazy" src={icon} alt="" className={styles.columnIcon} />
-        <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/61474e59802902303ad9ac3290d873cd4fe4c68625b54e0300ce72f1f3bf97a1?placeholderIfAbsent=true&apiKey=00a3660157ba4b838569d3ec33bb80c8" alt="" className={styles.columnDivider} />
+        <CmsImage
+          src={Icon}
+          loading="lazy"
+          className={styles.columnIcon}
+          alt={Title}
+          width={100}
+          height={100}
+        />
+        <Image
+          loading="lazy"
+          src="https://app-alll01saass8g3pp001.cms.optimizely.com/globalassets/footer-columns/divider.svg"
+          alt=""
+          width={100}
+          height={100}
+          className={styles.columnDivider}
+        />
         <div className={styles.columnTextContent}>
-          <div className={styles.columnTitle}>{title}</div>
-          {items.map((item, index) => (
-            <div key={index} className={index === 0 ? styles.columnSubtitle : styles.columnText}>
-              {item}
+          <div className={styles.columnTitle}>{Title}</div>
+          {links.map((item, index) => (
+            <div
+              key={index}
+              className={
+                index === 0 ? styles.columnSubtitle : styles.columnText
+              }
+            >
+              <Link href={item.url?.default as string}>{item.text}</Link>
             </div>
           ))}
         </div>
@@ -26,4 +49,4 @@ const FooterColumn: React.FC<FooterColumnProps> = ({ icon, title, items }) => {
   );
 };
 
-export default FooterColumn;
+export default FooterCol;

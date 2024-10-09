@@ -1,13 +1,13 @@
-import React from 'react';
-import styles from './Footer.module.css';
+import React from "react";
+import { CmsImage } from "@/components/shared/cms_image";
+import { ReferenceDataFragment } from "@/gql/graphql";
 
 interface SocialIconProps {
-  src: string;
-  alt: string;
+  sicon: ReferenceDataFragment;
 }
 
-const SocialIcon: React.FC<SocialIconProps> = ({ src, alt }) => {
-  return <img loading="lazy" src={src} alt={alt} className={styles.socialIcon} />;
+const SocialIcon: React.FC<SocialIconProps> = ({ sicon }) => {
+  return <CmsImage src={sicon} alt="Social Icon" width={24} height={24} />;
 };
 
 export default SocialIcon;
