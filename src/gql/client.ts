@@ -47,6 +47,32 @@ export const ArticleListElementDataFragmentDoc = /*#__PURE__*/ gql`
   articleListCount
 }
     `;
+export const ReferenceDataFragmentDoc = /*#__PURE__*/ gql`
+    fragment ReferenceData on ContentReference {
+  key
+  url {
+    ...LinkData
+  }
+}
+    `;
+export const FeaturedTileDataFragmentDoc = /*#__PURE__*/ gql`
+    fragment FeaturedTileData on FeaturedTile {
+  title: Title
+  variant: Variant
+  description: Description {
+    json
+  }
+  image: Image {
+    ...ReferenceData
+  }
+  cta1: CTA1 {
+    ...LinkData
+  }
+  cta2: CTA2 {
+    ...LinkData
+  }
+}
+    `;
 export const CTAElementDataFragmentDoc = /*#__PURE__*/ gql`
     fragment CTAElementData on CTAElement {
   text: Text
@@ -58,14 +84,6 @@ export const CTAElementDataFragmentDoc = /*#__PURE__*/ gql`
 export const HeadingElementDataFragmentDoc = /*#__PURE__*/ gql`
     fragment HeadingElementData on HeadingElement {
   headingText
-}
-    `;
-export const ReferenceDataFragmentDoc = /*#__PURE__*/ gql`
-    fragment ReferenceData on ContentReference {
-  key
-  url {
-    ...LinkData
-  }
 }
     `;
 export const ImageElementDataFragmentDoc = /*#__PURE__*/ gql`
@@ -100,6 +118,7 @@ export const ElementDataFragmentDoc = /*#__PURE__*/ gql`
     fragment ElementData on _IElement {
   ...IElementData
   ...ArticleListElementData
+  ...FeaturedTileData
   ...CTAElementData
   ...HeadingElementData
   ...ImageElementData
@@ -227,13 +246,17 @@ export const FooterDataFragmentDoc = /*#__PURE__*/ gql`
 export const ImageBannerDataFragmentDoc = /*#__PURE__*/ gql`
     fragment ImageBannerData on ImageBanner {
   title: Title
+  variant: Variant
   description: Description {
     json
   }
   image: Image {
     ...ReferenceData
   }
-  cta: CTA {
+  cta1: CTA1 {
+    ...ButtonBlockPropertyData
+  }
+  cta2: CTA2 {
     ...ButtonBlockPropertyData
   }
 }
@@ -427,6 +450,7 @@ ${CompositionDataFragmentDoc}
 ${ElementDataFragmentDoc}
 ${IElementDataFragmentDoc}
 ${ArticleListElementDataFragmentDoc}
+${FeaturedTileDataFragmentDoc}
 ${CTAElementDataFragmentDoc}
 ${HeadingElementDataFragmentDoc}
 ${ImageElementDataFragmentDoc}
@@ -456,10 +480,11 @@ ${CompositionDataFragmentDoc}
 ${ElementDataFragmentDoc}
 ${IElementDataFragmentDoc}
 ${ArticleListElementDataFragmentDoc}
+${FeaturedTileDataFragmentDoc}
+${ReferenceDataFragmentDoc}
 ${CTAElementDataFragmentDoc}
 ${HeadingElementDataFragmentDoc}
 ${ImageElementDataFragmentDoc}
-${ReferenceDataFragmentDoc}
 ${ParagraphElementDataFragmentDoc}
 ${TestimonialElementDataFragmentDoc}
 ${ArticleGroupPageDataFragmentDoc}

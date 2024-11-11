@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./HeaderNav.module.css";
-import { JWHeaderColumn, Link } from "@/gql/graphql";
+import { JWHeaderColumn, Link as OptiLink } from "@/gql/graphql";
+import Link from "next/link";
 
 interface ContentColumnProps {
   title: string;
-  items: Link[];
+  items: OptiLink[];
 }
 
 interface ContentSectionProps {
@@ -16,16 +17,19 @@ const ContentColumn: React.FC<ContentColumnProps> = ({ title, items }) => (
     <h2 className={styles.columnTitle}>{title}</h2>
     <div className={styles.columnContent}>
       {items.map((item, index) => (
-        <div key={index} className={styles.columnItem}>
+        <Link
+          key={index}
+          className={styles.columnItem}
+          href={item.url?.default as string}
+        >
           {item.text}
-        </div>
+        </Link>
       ))}
     </div>
   </div>
 );
 
 const ContentSection: React.FC<ContentSectionProps> = ({ headercols }) => {
-
   return (
     <section className={styles.contentSection}>
       <div className={styles.contentColumns}>
@@ -33,7 +37,7 @@ const ContentSection: React.FC<ContentSectionProps> = ({ headercols }) => {
           <React.Fragment key={index}>
             <ContentColumn
               title={column.HeaderColumnTitle as string}
-              items={column.HeaderColumnLinks as Link[]}
+              items={column.HeaderColumnLinks as OptiLink[]}
             />
             {index < headercols?.length - 1 && (
               <div className={styles.columnSeparator} />
